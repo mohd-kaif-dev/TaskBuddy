@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #000000;    /* Deep Black */
+  --color-secondary: #14213d;  /* Dark Blue */
+  --color-accent: #fca311;     /* Energetic Orange */
+  --color-success: #4CAF50;    /* Achievement Green */
+  --color-gray: #e5e5e5;       /* Light Gray */
+  --color-white: #ffffff;      /* White */
+}
+
+@layer base {
+  html {
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-[#000000] text-white min-h-screen m-0 p-0;
+  }
+
+  * {
+    @apply m-0 p-0 box-border;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#fca311] hover:bg-[#e59110] text-[#000000] px-6 py-3 rounded-lg 
+           font-medium transition-all duration-300 transform hover:scale-105 
+           hover:shadow-[0_0_15px_rgba(252,163,17,0.5)] active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg 
+           font-semibold transition-all duration-300 border border-white/10 
+           hover:bg-white/20 hover:scale-105 active:scale-95
+           hover:shadow-[0_0_15px_rgba(255,255,255,0.2)];
+  }
+
+  .card {
+    @apply bg-[#14213d] border border-[#e5e5e5]/10 rounded-lg p-6
+           transition-all duration-300 hover:shadow-[0_0_20px_rgba(252,163,17,0.15)]
+           hover:border-[#fca311]/20;
+  }
+
+  .achievement-card {
+    @apply bg-[#14213d] border-2 border-[#4CAF50] rounded-lg p-6
+           transition-all duration-300 hover:shadow-[0_0_20px_rgba(76,175,80,0.3)]
+           relative overflow-hidden;
+  }
+
+  .achievement-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full bg-gradient-to-r
+           from-[#4CAF50]/10 to-transparent opacity-0 transition-opacity
+           duration-300;
+  }
+
+  .achievement-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .level-badge {
+    @apply bg-gradient-to-r from-[#fca311] to-[#e59110]
+           text-black font-bold px-4 py-2 rounded-full
+           shadow-[0_0_10px_rgba(252,163,17,0.3)]
+           border border-[#fca311]/50;
+  }
+
+  .progress-bar {
+    @apply bg-[#14213d] rounded-full h-4 overflow-hidden
+           border border-[#fca311]/20;
+  }
+
+  .progress-bar-fill {
+    @apply bg-gradient-to-r from-[#fca311] to-[#e59110]
+           h-full transition-all duration-500
+           shadow-[0_0_10px_rgba(252,163,17,0.3)];
+  }
+
+  .input {
+    @apply bg-white/5 border border-white/10 text-white rounded-lg px-4 py-2 
+           focus:outline-none focus:border-[#fca311] focus:ring-2 focus:ring-[#fca311]/20 
+           transition-all duration-300;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-6xl font-bold text-white mb-6
+           bg-gradient-to-r from-white via-[#e49c28] to-[#d68400] bg-clip-text text-transparent;
+  }
+
+  .section-subtitle {
+    @apply text-xl text-[#e5e5e5] mb-8;
+  }
+
+  .feature-icon {
+    @apply text-4xl text-[#fca311] mb-4 transform transition-transform
+           duration-300 group-hover:scale-110 group-hover:rotate-12;
+  }
+
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+
+  @keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+}
+
+/* Custom Checkbox Styling */
+input[type="checkbox"] {
+  @apply w-5 h-5 cursor-pointer accent-primary;
+}
+
+/* App Container */
+.app {
+  @apply min-h-screen;
+}
+
+/* Clerk Overrides */
+.cl-internal-b3fm6y {
+  @apply bg-transparent;
+}
+
+.cl-card {
+  @apply bg-[#14213d] border border-[#e5e5e5]/10 rounded-lg !important;
+}
+
+.cl-headerTitle, 
+.cl-headerSubtitle,
+.cl-dividerText,
+.cl-footerText,
+.cl-formFieldLabel {
+  @apply text-white/90 !important;
+}
+
+.cl-formButtonPrimary {
+  @apply btn-primary !important;
+}
+
+.cl-formFieldInput {
+  @apply input !important;
+}
+
+.cl-socialButtonsBlockButton {
+  @apply btn-secondary !important;
+}
+
+.cl-socialButtonsBlockButtonText {
+  @apply text-white/90 !important;
+}
+
+.cl-dividerLine {
+  @apply bg-white/10 !important;
+}
+
+.cl-footerActionLink {
+  @apply text-[#fca311] hover:text-[#e59110] !important;
+}
+
+/* Logo Animation */
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(252, 163, 17, 0.2),
+                 0 0 20px rgba(252, 163, 17, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(252, 163, 17, 0.3),
+                 0 0 25px rgba(252, 163, 17, 0.2);
+  }
+}
+
+.font-righteous {
+  font-family: 'Righteous', cursive;
+}
+
+h1.logo-text {
+  animation: glow 3s ease-in-out infinite;
+  letter-spacing: 0.5px;
+}
+
+h1.logo-text:hover {
+  letter-spacing: 1px;
+}
