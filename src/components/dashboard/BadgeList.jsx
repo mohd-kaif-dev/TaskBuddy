@@ -85,13 +85,19 @@ const BadgeList = ({ gameState, GAME_CONFIG, user }) => {
 
   return (
     <div className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20">
-      <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-        <FaMedal className="text-[#fca311]" />
-        Badges
+      <h3 className="text-xl md:text-lg font-bold mb-6 flex items-center gap-3 bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent relative group">
+        <div className="relative">
+          <FaMedal className="text-[#fca311] text-3xl transform transition-transform group-hover:scale-110 group-hover:rotate-12" />
+          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#fca311] rounded-full animate-ping" />
+        </div>
+        <span className="relative text-white">
+          Badges
+          <div className="absolute -bottom-2 left-0 w-full h-0.5 bg-gradient-to-r from-[#fca311] to-transparent transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+        </span>
       </h3>
 
       {/* ✅ Badge Tabs */}
-      <div className="flex gap-4 mb-4">
+      <div className="flex gap-4 mb-4 text-base md:text-sm">
         <button
           className={`px-4 py-1 rounded-md ${
             selectedTab === "daily"

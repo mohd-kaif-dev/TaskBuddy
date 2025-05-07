@@ -20,10 +20,9 @@ import {
   FaScroll,
 } from "react-icons/fa";
 import { GiLevelThree } from "react-icons/gi";
-import { div } from "framer-motion/client";
 
 const Navbar = () => {
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
   const [showResources, setShowResources] = useState(false);
@@ -149,16 +148,6 @@ const Navbar = () => {
     ],
   };
 
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
-
-  const navLinks = [
-    { path: "/dashboard", label: "Dashboard" },
-    { path: "/history", label: "History" },
-    { path: "/docs", label: "Documentation" },
-  ];
-
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 bg-[#14213d]/95 backdrop-blur-sm border-b border-[#fca311]/20 z-40">
@@ -169,7 +158,7 @@ const Navbar = () => {
               className="flex-shrink-0 cursor-pointer group"
               onClick={() => navigate("/")}
             >
-              <h1 className="logo-text text-2xl font-righteous text-white hover:text-[#fca311] transition-all duration-300 flex items-center gap-2 relative">
+              <h1 className="logo-text text-xl font-righteous text-white hover:text-[#fca311] transition-all duration-300 flex items-center gap-2 relative">
                 <FaGamepad className="text-[#fca311] group-hover:rotate-12 transition-transform duration-300 text-3xl" />
                 <span className="relative">
                   <span className="relative z-10">Task</span>
@@ -211,10 +200,10 @@ const Navbar = () => {
                               <div className="flex items-start gap-3">
                                 <div className="mt-1">{feature.icon}</div>
                                 <div>
-                                  <div className="font-medium text-white">
+                                  <div className="font-medium text-sm text-white">
                                     {feature.title}
                                   </div>
-                                  <div className="text-sm text-white/60">
+                                  <div className="text-xs text-white/60">
                                     {feature.description}
                                   </div>
                                 </div>
@@ -257,10 +246,10 @@ const Navbar = () => {
                             <div className="flex items-start gap-3">
                               <div className="mt-1">{resource.icon}</div>
                               <div>
-                                <div className="font-medium text-white">
+                                <div className="font-medium text-sm text-white">
                                   {resource.title}
                                 </div>
-                                <div className="text-sm text-white/60">
+                                <div className="text-xs text-white/60">
                                   {resource.description}
                                 </div>
                               </div>

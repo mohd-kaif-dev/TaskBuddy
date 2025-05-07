@@ -30,7 +30,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-[#fca311] hover:bg-[#e59110] text-[#000000] px-6 py-3 rounded-lg 
+    @apply bg-[#fca311] hover:bg-[#e59110] text-[#000000] px-4 py-2 rounded-lg 
            font-medium transition-all duration-300 transform hover:scale-105 
            hover:shadow-[0_0_15px_rgba(252,163,17,0.5)] active:scale-95;
   }

@@ -51,12 +51,12 @@ const Footer = () => {
       animate={{ opacity: 1, y: 0 }}
       className="bg-[#14213d] border-t border-[#fca311]/20 py-4 px-8"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto text-sm">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8">
           {/* Left Section - Date Time */}
           <div className="flex items-center justify-center md:justify-start">
-            <div className="text-white/80 font-mono text-sm md:text-lg flex items-center">
+            <div className="text-white/80 font-mono flex items-center">
               <FaCalendarAlt className="mr-2 text-[#fca311]" />
               {formatDate(currentDateTime)}
             </div>
@@ -78,7 +78,17 @@ const Footer = () => {
             <div className="flex items-center gap-2 text-white/80">
               <span>Developed with</span>
               <FaHeart className="text-red-500 animate-pulse" />
-              <span>by Mohd Kaif</span>
+              <span>
+                by{" "}
+                <a
+                  href="https://github.com/mohd-kaif-dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#fca311] hover:text-[#fca311]/80 hover:underline"
+                >
+                  Mohd Kaif
+                </a>
+              </span>
             </div>
           </div>
         </div>

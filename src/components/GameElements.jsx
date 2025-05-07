@@ -20,16 +20,18 @@ import {
 export const BadgeCard = ({ badge, isUnlocked, progress, total }) => (
   <motion.div
     whileHover={{ scale: 1.02 }}
-    className={`bg-black/20 rounded-lg p-4 ${!isUnlocked ? "opacity-50" : ""}`}
+    className={`bg-black/20 rounded-lg p-4 md:p-3 ${
+      !isUnlocked ? "opacity-50" : ""
+    }`}
   >
     <div className="flex items-start gap-3">
-      <div className="text-2xl mt-1">{badge.icon}</div>
+      <div className="text-2xl md:text-xl mt-1">{badge.icon}</div>
       <div className="flex-1">
         <div className="flex items-center gap-2">
-          <h4 className="font-medium">{badge.title}</h4>
+          <h4 className="font-medium ">{badge.title}</h4>
           {isUnlocked && <FaCheck className="text-green-500 text-sm" />}
         </div>
-        <p className="text-sm text-white/60">{badge.description}</p>
+        <p className=" text-white/60 text-sm md:text-xs">{badge.description}</p>
         {!isUnlocked && progress !== undefined && (
           <>
             <div className="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -119,37 +121,37 @@ export const LevelProgress = ({ level, xp, requiredXP }) => (
 );
 
 export const StreakDisplay = ({ streak, longestStreak }) => (
-  <div className="flex items-center gap-4 bg-black/20 p-4 rounded-lg">
+  <div className="flex items-center gap-4 bg-black/20 p-4 md:p-2 rounded-lg">
     <div className="flex items-center gap-2">
       <FaFire className="text-red-500 text-xl" />
       <div>
-        <div className="text-sm text-white/60">Current Streak</div>
+        <div className="text-xs text-white/60">Current Streak</div>
         <div className="text-xl font-bold">{streak} days</div>
       </div>
     </div>
-    <div className="h-8 w-px bg-white/10" />
+    <div className="h-8 w-1 bg-white/50 rounded-full" />
     <div>
-      <div className="text-sm text-white/60">Longest Streak</div>
+      <div className="text-xs text-white/60">Longest Streak</div>
       <div className="text-xl font-bold">{longestStreak} days</div>
     </div>
   </div>
 );
 
 export const TaskPointsPreview = ({ points, streakBonus }) => (
-  <div className="bg-black/30 rounded-xl px-6 pt-6 pb-2 md:pb-6 backdrop-blur-sm border border-[#fca311]/20 hover:border-[#fca311]/40 transition-all duration-300 shadow-lg hover:shadow-[#fca311]/10">
+  <div className="bg-black/30 rounded-xl px-6 md:px-4 pt-4 pb-2 md:pb-4 backdrop-blur-sm border border-[#fca311]/20 hover:border-[#fca311]/40 transition-all duration-300 shadow-lg hover:shadow-[#fca311]/10">
     <div className="flex justify-between items-center w-full mb-4">
       <div className="flex items-center gap-3">
         <div className="relative">
-          <FaTrophy className="text-[#fca311] text-2xl transform hover:scale-110 transition-transform" />
+          <FaTrophy className="text-[#fca311] text-2xl md:text-xl transform hover:scale-110 transition-transform" />
           <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#fca311] rounded-full animate-ping" />
         </div>
-        <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent">
+        <span className="text-lg md:text-base font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent">
           Total Points
         </span>
       </div>
       <div className="relative">
         <motion.span
-          className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent"
+          className="text-xl font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent"
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.5 }}

@@ -211,6 +211,8 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [statsExpanded, setStatsExpanded] = useState(false);
+  const [showRewardsModal, setShowRewardsModal] = useState(false);
+
   const { user } = useUser();
 
   const [gameState, setGameState] = useState({
@@ -394,8 +396,9 @@ const Dashboard = () => {
     console.log("today", today);
 
     const lastWeeklyReset = new Date(gameState.lastWeeklyResetDate);
-
+    console.log("gameState", gameState);
     let updated = { ...gameState };
+    console.log("updated before reset", updated);
 
     let hasChanged = false;
 
@@ -453,6 +456,26 @@ const Dashboard = () => {
       console.log("⏸️ No reset needed");
     }
   };
+
+  useEffect(() => {
+    const simulateYesterdayLogin = () => {
+      setGameState((prev) => {
+        const fakeYesterday = new Date(Date.now() - 86400000).toDateString();
+        const newState = {
+          ...prev,
+          lastLoginDate: fakeYesterday,
+        };
+        console.log("newState", newState);
+        localStorage.setItem(
+          `userProgress_${user.id}`,
+          JSON.stringify(newState)
+        );
+        return newState;
+      });
+    };
+
+    simulateYesterdayLogin(); // Run this once when component mounts
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
@@ -621,10 +644,10 @@ const Dashboard = () => {
                 >
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <FaChartBar className="text-[#fca311] text-2xl" />
-                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#fca311] rounded-full animate-ping" />
+                      <FaChartBar className="text-[#fca311] text-xl" />
+                      <div className="absolute -top-1 -right-1 w-1 h-1 bg-[#fca311] rounded-full animate-ping" />
                     </div>
-                    <span className="bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent text-md">
                       {user.firstName}&apos;s Statistics
                     </span>
                   </div>
@@ -632,7 +655,7 @@ const Dashboard = () => {
                     animate={{ rotate: statsExpanded ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <FaChevronDown className="text-[#fca311] text-xl group-hover:scale-110 transition-transform" />
+                    <FaChevronDown className="text-[#fca311] group-hover:scale-110 transition-transform text-md" />
                   </motion.div>
                 </button>
 
@@ -645,9 +668,9 @@ const Dashboard = () => {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="pt-6 space-y-4">
+                      <div className="pt-6 space-y-4 px-2">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-[#1a2b4d] rounded-xl p-6 shadow-lg border border-[#fca311]/20 hover:border-[#fca311]/40 transition-colors">
+                          <div className="bg-[#1a2b4d] rounded-xl p-4 shadow-lg border border-[#fca311]/20 hover:border-[#fca311]/40 transition-colors">
                             <LevelProgress
                               level={gameState.level}
                               xp={gameState.xp}
@@ -656,7 +679,7 @@ const Dashboard = () => {
                               )}
                             />
                           </div>
-                          <div className="bg-[#1a2b4d] rounded-xl p-6 shadow-lg border border-[#fca311]/20 hover:border-[#fca311]/40 transition-colors">
+                          <div className="bg-[#1a2b4d] rounded-xl p-4 shadow-lg border border-[#fca311]/20 hover:border-[#fca311]/40 transition-colors">
                             <StreakDisplay
                               streak={gameState.streak || 0}
                               longestStreak={gameState.longestStreak || 0}
@@ -743,33 +766,113 @@ const Dashboard = () => {
               <div>
                 <h3 className="text-lg font-bold">Ready to Claim Rewards?</h3>
                 <p className="text-white/60">
-                  You have {gameState.unlockedRewards?.length} rewards available
-                  to claim!
+                  You have {gameState.unlockedRewards?.length || 0} rewards
+                  available to claim!
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <button
                 onClick={() => {
-                  // Trigger confetti when claiming rewards
+                  // Only allow claiming if there are rewards
+                  if (!gameState.unlockedRewards?.length) return;
+
+                  // Trigger confetti
                   confetti({
                     particleCount: 100,
                     spread: 70,
                     origin: { y: 0.6 },
                   });
+
+                  // Mark rewards as claimed
+                  const updatedGameState = {
+                    ...gameState,
+                    claimedRewards: [
+                      ...(gameState.claimedRewards || []),
+                      ...gameState.unlockedRewards,
+                    ],
+                    unlockedRewards: [],
+                  };
+
+                  // Update state and localStorage
+                  setGameState(updatedGameState);
+                  localStorage.setItem(
+                    `userProgress_${user.id}`,
+                    JSON.stringify(updatedGameState)
+                  );
+
+                  // Show success mascot
+                  setShowMascot(true);
                 }}
-                className="btn-primary flex items-center gap-2 group"
+                disabled={!gameState.unlockedRewards?.length}
+                className={`btn-primary flex items-center gap-2 group ${
+                  !gameState.unlockedRewards?.length
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                }`}
               >
                 <span>Claim Rewards</span>
                 <FaChevronRight className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="text-white/60 hover:text-white transition-colors">
+              <button
+                onClick={() => setShowRewardsModal(true)}
+                className="text-white/60 hover:text-white transition-colors"
+              >
                 View All
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Rewards Modal */}
+      <AnimatePresence>
+        {showRewardsModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20 w-full max-w-md"
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-bold">Available Rewards</h3>
+                <button
+                  onClick={() => setShowRewardsModal(false)}
+                  className="text-white/60 hover:text-white"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {gameState.unlockedRewards?.map((reward, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <img
+                      src={reward.imageUrl}
+                      alt={reward.name}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    <div>
+                      <h4 className="text-sm font-medium">{reward.name}</h4>
+                      <p className="text-xs text-white/60">
+                        {reward.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Profile Image Modal */}
 
       {/* Profile Image Modal */}
       <AnimatePresence>
@@ -963,7 +1066,7 @@ const Dashboard = () => {
                     dueTime,
                   });
                 }}
-                className="space-y-4"
+                className="space-y-2"
               >
                 <div>
                   <label className="block text-white/60 text-sm mb-2">
@@ -1088,7 +1191,7 @@ const Dashboard = () => {
                         return `${year}-${month}-${day}`;
                       })()}
                       onClick={(e) => e.target.showPicker()}
-                      className="w-full bg-white border border-[#fca311]/20 rounded-lg px-4 py-2 text-black focus:border-[#fca311] focus:outline-none appearance-none cursor-pointer"
+                      className="w-full bg-white border text-sm border-[#fca311]/20 rounded-lg px-4 py-2 text-black focus:border-[#fca311] focus:outline-none appearance-none cursor-pointer font-bold"
                     />
                   </div>
                   <div className="flex-1">
@@ -1109,7 +1212,7 @@ const Dashboard = () => {
                         });
                       })()}
                       onClick={(e) => e.target.showPicker()}
-                      className="w-full bg-white border border-[#fca311]/20 rounded-lg px-4 py-2 text-black focus:border-[#fca311] focus:outline-none appearance-none cursor-pointer"
+                      className="w-full text-sm bg-white border border-[#fca311]/20 rounded-lg px-4 py-2 text-black focus:border-[#fca311] focus:outline-none appearance-none cursor-pointer font-bold"
                     />
                   </div>
                 </div>

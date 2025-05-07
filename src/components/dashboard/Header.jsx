@@ -57,7 +57,7 @@ const Header = ({ gameState, user, GAME_CONFIG, setShowProfileModal }) => {
   };
   return (
     <div className="max-w-7xl mx-auto mb-8">
-      <div className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20">
+      <div className="bg-[#14213d] rounded-xl p-4 shadow-lg border border-[#fca311]/20">
         <div className="flex flex-col lg:flex-row items-center gap-6 ">
           {/* User Info */}
           <div className="flex items-center gap-4">
@@ -68,17 +68,17 @@ const Header = ({ gameState, user, GAME_CONFIG, setShowProfileModal }) => {
               <img
                 src={user?.imageUrl}
                 alt={user?.fullName}
-                className="w-16 h-16 rounded-full border-2 border-[#fca311] transition-transform group-hover:scale-105"
+                className="w-12 h-12 rounded-full border-2 border-[#fca311] transition-transform group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                 <FaUser className="text-white text-xl" />
               </div>
             </button>
             <div>
-              <h2 className="text-xl font-bold">{user?.fullName}</h2>
+              <h2 className="text-lg font-bold">{user?.fullName}</h2>
               <div className="flex items-center gap-2 text-white/60">
                 <GiLevelThree className="text-[#fca311]" />
-                <span>{TITLES[gameState.level]}</span>
+                <span className="text-sm">{TITLES[gameState.level]}</span>
               </div>
             </div>
           </div>
@@ -89,7 +89,7 @@ const Header = ({ gameState, user, GAME_CONFIG, setShowProfileModal }) => {
               <span className="text-white/60">
                 Progress to Level {gameState.level + 1}
               </span>
-              <span className="text-[#fca311]">
+              <span className="text-[#fca311] font-bold">
                 {gameState.xp}/{GAME_CONFIG.getRequiredXP(gameState.level)} XP
               </span>
             </div>
@@ -112,8 +112,8 @@ const Header = ({ gameState, user, GAME_CONFIG, setShowProfileModal }) => {
           {/* Total Points */}
           <div className="flex items-center gap-3 bg-black/20 px-4 py-2 rounded-lg">
             <FaTrophy className="text-[#fca311] text-xl" />
-            <div className="w-full md:w-auto flex md:flex-col items-center gap-2 md:gap-0 justify-center">
-              <div className="text-2xl font-bold">{gameState.totalPoints}</div>
+            <div className="w-full md:w-auto flex md:flex-row items-center gap-2 justify-center">
+              <div className="text-md font-bold">{gameState.totalPoints}</div>
               <div className="text-white/60 text-sm">Total Points</div>
             </div>
           </div>
