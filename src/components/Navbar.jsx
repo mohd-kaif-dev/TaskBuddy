@@ -151,7 +151,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 bg-[#14213d]/95 backdrop-blur-sm border-b border-[#fca311]/20 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div
@@ -169,7 +169,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden md:flex items-center  gap-4">
               {/* Features Dropdown - Only show on homepage when not signed in */}
               {!isSignedIn && isHomePage && (
                 <div className="relative">
@@ -232,7 +232,7 @@ const Navbar = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-0 w-64 mt-2 origin-top-right rounded-md shadow-lg bg-[#14213d] border border-[#fca311]/20"
+                      className="absolute left-0 w-48 mt-2 origin-top-right rounded-md shadow-lg bg-[#14213d] border border-[#fca311]/20"
                       onMouseEnter={() => setShowResources(true)}
                       onMouseLeave={() => setShowResources(false)}
                     >

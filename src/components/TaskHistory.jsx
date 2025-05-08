@@ -63,7 +63,7 @@ const TaskHistory = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+    return date.toDateString() + " " + date.toLocaleTimeString();
   };
 
   const toggleTaskSelection = (taskId) => {
@@ -110,13 +110,59 @@ const TaskHistory = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white flex flex-col">
-      <div className="flex-grow py-24 px-8">
+    <div className="relative min-h-screen bg-[#000000] text-white flex flex-col overflow-hidden pt-20 ">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#14213d] to-[#000000] opacity-80">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+            linear-gradient(to right, #fca31122 1px, transparent 1px),
+            linear-gradient(to bottom, #fca31122 1px, transparent 1px)
+          `,
+            backgroundSize: "50px 50px",
+            animation: "grid 15s linear infinite",
+          }}
+        />
+
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            className="fixed w-1 h-1 bg-[#fca311] rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0, 1, 0],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
+      <style jsx="true">{`
+        @keyframes grid {
+          0% {
+            transform: translateY(0);
+          }
+          100% {
+            transform: translateY(50px);
+          }
+        }
+      `}</style>
+
+      <div className="flex-grow px-8 z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8 flex md:flex-row flex-col justify-between items-center"
+          className="mb-4 flex md:flex-row flex-col justify-between items-center"
         >
           <div>
             <div className="flex items-center gap-4 mb-6">
@@ -193,7 +239,7 @@ const TaskHistory = () => {
         )}
 
         {/* Search and Filter */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
             <FaSearch className="absolute left-3 top-3 text-white/60" />
             <input
@@ -212,126 +258,133 @@ const TaskHistory = () => {
               className="pl-10 pr-4 py-2 bg-[#14213d] rounded-lg border border-[#fca311]/20 focus:ring-2 focus:ring-[#fca311] focus:outline-none appearance-none"
             >
               <option value="all">All Priorities</option>
-              <option value="low">Low Priority</option>
-              <option value="medium">Medium Priority</option>
-              <option value="high">High Priority</option>
+              <option value="LOW">Low Priority</option>
+              <option value="MEDIUM">Medium Priority</option>
+              <option value="HIGH">High Priority</option>
             </select>
           </div>
         </div>
 
         {/* Task List */}
-        <div className="space-y-4">
+        <div className="space-y-6 p-0 md:p-6">
           {filteredTasks.map((task) => (
             <motion.div
               key={task.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               whileHover={{ scale: 1.02 }}
-              className={`bg-[#14213d] rounded-lg py-4 pl-6 border ${
+              className={`bg-[#14213d] rounded-lg  border ${
                 selectedTasks.has(task.id)
                   ? "border-red-500"
                   : "border-[#fca311]/20"
-              } hover:bg-[#14213d]/80 transition-all relative w-full`}
+              } hover:bg-[#14213d]/80 transition-all relative w-full flex flex-col justify-between`}
             >
-              {isSelectionMode && (
-                <div className="absolute top-4 md:left-4 left-2">
-                  <button
-                    onClick={() => toggleTaskSelection(task.id)}
-                    className="text-2xl text-[#fca311] hover:text-[#fca311]/80 transition-colors"
-                  >
-                    {selectedTasks.has(task.id) ? (
-                      <FaCheckSquare />
-                    ) : (
-                      <FaSquare />
+              <div className="py-4 pl-6">
+                {isSelectionMode && (
+                  <div className="absolute top-4 md:left-4 left-2">
+                    <button
+                      onClick={() => toggleTaskSelection(task.id)}
+                      className="text-2xl text-[#fca311] hover:text-[#fca311]/80 transition-colors"
+                    >
+                      {selectedTasks.has(task.id) ? (
+                        <FaCheckSquare />
+                      ) : (
+                        <FaSquare />
+                      )}
+                    </button>
+                  </div>
+                )}
+                {!task.completed && (
+                  <div className="absolute bottom-0 right-2 md:bottom-6 md:-right-6 flex items-center gap-2 bg-red-300 px-2 py-1 rounded-t-lg rounded-l-none rotate-0 md:rotate-[270deg]">
+                    <FaExclamationTriangle className="text-red-500" />
+                    <span className="text-red-500 text-xs">Failed</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-start mb-2 ml-3 md:ml-6 md:mr-4">
+                  <div className="pr-4">
+                    <h3
+                      className={`text-xl font-semibold ${getPriorityColor(
+                        task.priority
+                      )}`}
+                    >
+                      {task.title}
+                    </h3>
+                  </div>
+                  <div className="flex items-center justify-center w-10">
+                    {!isSelectionMode && (
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => handleSingleDelete(task.id)}
+                        className="text-red-500 hover:text-red-600 transition-colors mr-2"
+                      >
+                        <FaTrash />
+                      </motion.button>
                     )}
-                  </button>
-                </div>
-              )}
-              {!task.completed && (
-                <div className="absolute bottom-6 -right-6 flex items-center gap-2 bg-red-300 px-2 py-1 rounded-t-lg rounded-l-none rotate-[270deg]">
-                  <FaExclamationTriangle className="text-red-500" />
-                  <span className="text-red-500 text-xs">Failed</span>
-                </div>
-              )}
-              <div className="flex justify-between items-start mb-4 ml-3 md:ml-6 md:mr-4">
-                <div className="w-4/5 pr-4">
-                  <h3
-                    className={`text-xl font-semibold ${getPriorityColor(
-                      task.priority
-                    )}`}
-                  >
-                    {task.title}
-                  </h3>
-                  <div className="flex flex-col md:flex-row items-start md:items-center md:gap-4 gap-2 text-white/60 mt-2">
-                    <div className="flex items-center gap-2">
-                      <FaCalendarAlt />
-                      <span className="text-sm md:text-base">
-                        {formatDate(task.completed_at)}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FaClock />
-                      <span className="text-sm md:text-base">
-                        Due: {task.dueTime}
-                      </span>
-                    </div>
                   </div>
                 </div>
-                <div className="w-1/5 flex flex-col md:flex-row items-center gap-2 justify-between pr-2">
-                  <div className="flex items-center gap-2 whitespace-nowrap mr-4">
-                    <FaStar className="text-[#fca311]" />
-                    <span className="font-bold text-xs md:text-base">
-                      {task.points} XP
+
+                {/* Milestones */}
+                {task.milestones && task.milestones.length > 0 && (
+                  <div className="mt-4 space-y-2 ml-8">
+                    {task.milestones.map((milestone) => (
+                      <div
+                        key={milestone.id}
+                        className="flex items-center gap-2 text-white/60"
+                      >
+                        <FaCheck
+                          className={`${
+                            milestone.completed
+                              ? "text-green-500"
+                              : "text-white/20"
+                          }`}
+                        />
+                        <span>{milestone.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Achievements */}
+                {task.achievements && task.achievements.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {task.achievements.map((achievement, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-1 bg-[#fca311]/10 px-3 py-1 rounded-full"
+                      >
+                        <FaTrophy className="text-[#fca311]" />
+                        <span className="text-sm">{achievement}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-between items-start md:items-center md:gap-4 gap-2 text-white/60 border-t-2 border-white/20 py-2 px-4">
+                <div className="flex items-start gap-2 md:gap-6 flex-col md:flex-row font-bold text-xs md:text-sm">
+                  <div className="flex items-center gap-2 relative group">
+                    <FaCalendarAlt className="text-[#fca311] transition-transform hover:scale-110" />
+                    <div className="absolute -top-8 right-1/4 px-2 py-1 bg-[#14213d] text-xs text-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[#fca311]/20 backdrop-blur-sm whitespace-nowrap">
+                      Task Completion Time
+                    </div>
+
+                    <span>{formatDate(task.completed_at)}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaClock className="text-[#fca311]" />
+                    <span>
+                      Due: {new Date(task.dueDate).toDateString()}{" "}
+                      {task.dueTime}
                     </span>
                   </div>
-                  {!isSelectionMode && (
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => handleSingleDelete(task.id)}
-                      className="text-red-500 hover:text-red-600 transition-colors mr-2"
-                    >
-                      <FaTrash />
-                    </motion.button>
-                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaStar className="text-[#fca311]" />
+                  <span className="font-bold text-xs md:text-base">
+                    {task.points} XP
+                  </span>
                 </div>
               </div>
-
-              {/* Milestones */}
-              {task.milestones && task.milestones.length > 0 && (
-                <div className="mt-4 space-y-2 ml-8">
-                  {task.milestones.map((milestone) => (
-                    <div
-                      key={milestone.id}
-                      className="flex items-center gap-2 text-white/60"
-                    >
-                      <FaCheck
-                        className={`${
-                          milestone.completed
-                            ? "text-green-500"
-                            : "text-white/20"
-                        }`}
-                      />
-                      <span>{milestone.title}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Achievements */}
-              {task.achievements && task.achievements.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {task.achievements.map((achievement, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-1 bg-[#fca311]/10 px-3 py-1 rounded-full"
-                    >
-                      <FaTrophy className="text-[#fca311]" />
-                      <span className="text-sm">{achievement}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
             </motion.div>
           ))}
         </div>
@@ -339,13 +392,45 @@ const TaskHistory = () => {
         {/* Empty State */}
         {filteredTasks.length === 0 && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center px-4"
           >
-            <p className="text-white/60">
-              No completed quests found. Time to embark on new adventures!
-            </p>
+            <motion.div
+              className="max-w-md mx-auto bg-[#14213d]/80 rounded-xl p-8 border-2 border-[#fca311]/30 shadow-lg backdrop-blur-sm"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <motion.div
+                animate={{
+                  rotate: [0, -10, 10, -10, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 3,
+                }}
+              >
+                <FaGamepad className="text-[#fca311] text-5xl mx-auto mb-4" />
+              </motion.div>
+
+              <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-[#fca311] to-yellow-500 bg-clip-text text-transparent">
+                Your Quest Log Awaits!
+              </h3>
+
+              <p className="text-white/80 mb-4">
+                No completed quests found in your adventure log. Time to embark
+                on new heroic challenges!
+              </p>
+
+              <div className="flex justify-center gap-2 text-[#fca311]/60">
+                <FaStar className="animate-pulse" />
+                <FaTrophy className="animate-bounce" />
+                <FaStar className="animate-pulse" />
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </div>

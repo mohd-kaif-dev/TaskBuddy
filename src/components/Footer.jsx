@@ -49,7 +49,7 @@ const Footer = () => {
     <motion.footer
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-[#14213d] border-t border-[#fca311]/20 py-4 px-8"
+      className="bg-[#14213d] border-t border-[#fca311]/20 py-4 px-8 z-20"
     >
       <div className="max-w-7xl mx-auto text-sm">
         {/* Main Footer Content */}

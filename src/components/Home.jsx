@@ -45,7 +45,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-[#000000]">
       {/* Hero Section */}
-      <div className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <div className="relative min-h-[90vh] flex items-center">
         {/* Animated SVG Background */}
         <div className="absolute inset-0">
           <svg
@@ -124,31 +124,108 @@ const Home = () => {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, y: -50, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 1,
+                type: "spring",
+                bounce: 0.4,
+              }}
               className="section-title"
             >
-              Make Task Management
+              <motion.span
+                className="bg-gradient-to-r from-[#fca311] to-[#f48c06] text-transparent bg-clip-text"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+              >
+                {Array.from("Make Task Management").map((char, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2, delay: index * 0.05 }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </motion.span>
               <br />
-              Actually Fun
+              <motion.span
+                className="relative inline-block bg-gradient-to-r from-[#fca311] to-[#f48c06] text-transparent bg-clip-text"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.2 }}
+              >
+                {Array.from("Actually ").map((char, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.1, delay: 1.2 + index * 0.05 }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+                <motion.span
+                  className="relative inline-block text-neutral-300 drop-shadow-[0_0_6px_rgba(252,163,17,0.8)]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 1.7 }}
+                >
+                  {Array.from("Fun").map((char, index) => (
+                    <motion.span
+                      key={index}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.1, delay: 1.7 + index * 0.05 }}
+                      className="drop-shadow-[0_0_4px_rgba(252,163,17,0.8)]"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                  <motion.span
+                    className="absolute -bottom-2 left-0 w-full h-1 bg-[#fca311] shadow-[0_0_8px_rgba(252,163,17,0.8)]"
+                    initial={{ scaleX: 0, originX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 2, duration: 0.8 }}
+                  />
+                </motion.span>
+              </motion.span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 2.2 }}
               className="section-subtitle"
             >
-              Stop procrastinating, start achieving. Transform your tasks into
-              an exciting game where every completion levels you up and earns
-              rewards.
+              Stop{" "}
+              <motion.span
+                initial={{ width: 0 }}
+                animate={{ width: 100 }}
+                transition={{ duration: 0.5, delay: 2.5 }}
+                className="bg-gradient-to-r from-[#fca311] to-[#f48c06] p-1 rounded-lg text-background font-semibold"
+              >
+                procrastinating
+              </motion.span>
+              , start achieving. Transform your tasks into an exciting game
+              where every completion levels you up and{" "}
+              <motion.span
+                initial={{ width: 0 }}
+                animate={{ width: 100 }}
+                transition={{ duration: 0.5, delay: 2.5 }}
+                className="bg-gradient-to-r from-[#fca311] to-[#f48c06] px-1 py-0.5 rounded-lg text-background font-semibold"
+              >
+                earns rewards
+              </motion.span>
+              .
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 2.8 }}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
               {isSignedIn ? (
@@ -172,24 +249,68 @@ const Home = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8"
+              transition={{ duration: 0.8, delay: 3.6 }}
+              className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 px-4"
             >
-              <div className="achievement-card">
-                <FaTrophy className="text-[#4CAF50] text-4xl mb-2" />
-                <div className="text-2xl font-bold">50K+</div>
-                <div className="text-[#e5e5e5]">Tasks Completed</div>
-              </div>
-              <div className="achievement-card">
-                <FaLevelUpAlt className="text-[#4CAF50] text-4xl mb-2" />
-                <div className="text-2xl font-bold">1M+</div>
-                <div className="text-[#e5e5e5]">Points Earned</div>
-              </div>
-              <div className="achievement-card">
-                <FaStar className="text-[#4CAF50] text-4xl mb-2" />
-                <div className="text-2xl font-bold">10K+</div>
-                <div className="text-[#e5e5e5]">Active Players</div>
-              </div>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="achievement-card bg-gradient-to-br from-[#14213d]/50 to-[#000000]/50 backdrop-blur-lg border border-[#fca311]/20 rounded-xl p-8 hover:border-[#fca311] transition-all duration-300 relative"
+              >
+                <div className="relative flex justify-center">
+                  <FaTrophy className="text-[#fca311] text-4xl mb-4 relative z-10 transform hover:rotate-12 transition-transform duration-300" />
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-[#fca311] to-[#f48c06] bg-clip-text text-transparent">
+                    50K+
+                  </div>
+                  <div className="text-[#e5e5e5] mt-2 font-medium">
+                    Tasks Completed
+                  </div>
+                  <div className="text-sm text-[#e5e5e5]/60 mt-2">
+                    And counting daily!
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="achievement-card bg-gradient-to-br from-[#14213d]/50 to-[#000000]/50 backdrop-blur-lg border border-[#fca311]/20 rounded-xl p-8 hover:border-[#fca311] transition-all duration-300"
+              >
+                <div className="relative flex justify-center">
+                  <FaLevelUpAlt className="text-[#fca311] text-4xl mb-4 relative z-10 transform hover:translate-y-[-5px] transition-transform duration-300" />
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-[#fca311] to-[#f48c06] bg-clip-text text-transparent">
+                    1M+
+                  </div>
+                  <div className="text-[#e5e5e5] mt-2 font-medium">
+                    Points Earned
+                  </div>
+                  <div className="text-sm text-[#e5e5e5]/60 mt-2">
+                    By our community
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="achievement-card bg-gradient-to-br from-[#14213d]/50 to-[#000000]/50 backdrop-blur-lg border border-[#fca311]/20 rounded-xl p-8 hover:border-[#fca311] transition-all duration-300"
+              >
+                <div className="relative flex justify-center">
+                  <FaStar className="text-[#fca311] text-4xl mb-4 relative z-10 transform hover:rotate-180 transition-transform duration-300" />
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-[#fca311] to-[#f48c06] bg-clip-text text-transparent">
+                    10K+
+                  </div>
+                  <div className="text-[#e5e5e5] mt-2 font-medium">
+                    Active Players
+                  </div>
+                  <div className="text-sm text-[#e5e5e5]/60 mt-2">
+                    Join the community!
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import Auth from "./components/Auth";
 import TaskHistory from "./components/TaskHistory";
 import Documentation from "./components/Documentation";
 import Footer from "./components/Footer";
+import Cursor from "./components/Cursor";
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     <ClerkProvider publishableKey={clerkPubKey}>
       <Router>
         <div className="min-h-screen bg-[#000000] text-white">
+          <Cursor />
           <Navbar />
           <Routes>
             {/* Public home page - redirect to dashboard if signed in */}

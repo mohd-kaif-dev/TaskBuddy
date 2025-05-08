@@ -412,8 +412,6 @@ const TaskList = ({
           JSON.stringify(newCompletedTasks)
         );
 
-        console.log("updatedProgress", updatedProgress);
-        console.log("gameState after task complete", gameState);
         // Save task history
         const taskHistory = JSON.parse(
           localStorage.getItem(`taskHistory_${user.id}`) || "[]"

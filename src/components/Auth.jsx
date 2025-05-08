@@ -49,9 +49,9 @@ const Auth = ({ type }) => {
           {/* Vector Art / Illustrations */}
           <div className="grid grid-cols-2 gap-6">
             <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, type: "spring" }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
               className="achievement-card bg-gradient-to-br from-[#14213d]/90 to-[#14213d]/60 p-6 rounded-2xl border border-[#fca311]/20 relative group backdrop-blur-sm hover:shadow-[0_0_30px_rgba(252,163,17,0.3)] transition-all duration-500"
             >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-15 group-hover:drop-shadow-[0_0_8px_rgba(252,163,17,0.8)] transition-all duration-500">
@@ -68,13 +68,13 @@ const Auth = ({ type }) => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotateY: 180 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, type: "spring" }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
               className="achievement-card bg-gradient-to-bl from-[#14213d]/90 to-[#14213d]/60 p-6 rounded-2xl border border-[#fca311]/20 relative group backdrop-blur-sm hover:shadow-[0_0_30px_rgba(252,163,17,0.3)] transition-all duration-500"
             >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-15 group-hover:drop-shadow-[0_0_8px_rgba(252,163,17,0.8)] transition-all duration-500">
-                <FaStar className="text-[#fca311] text-8xl group-hover:rotate-180 group-hover:scale-110 transition-all duration-500" />
+                <FaStar className="text-[#fca311] text-8xl group-hover:rotate-45 group-hover:scale-110 transition-all duration-500" />
               </div>
               <div className="relative z-10">
                 <h3 className="text-white font-bold text-lg mb-1 group-hover:text-[#fca311] transition-colors">
@@ -87,9 +87,9 @@ const Auth = ({ type }) => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 0.7, delay: 0.4, type: "spring" }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
               className="achievement-card bg-gradient-to-tr from-[#14213d]/90 to-[#14213d]/60 p-6 rounded-2xl border border-[#fca311]/20 relative group backdrop-blur-sm hover:shadow-[0_0_30px_rgba(252,163,17,0.3)] transition-all duration-500"
             >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-15 group-hover:drop-shadow-[0_0_8px_rgba(252,163,17,0.8)] transition-all duration-500">
@@ -106,9 +106,9 @@ const Auth = ({ type }) => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotateY: 180 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 0.7, delay: 0.5, type: "spring" }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.7 }}
               className="achievement-card bg-gradient-to-tl from-[#14213d]/90 to-[#14213d]/60 p-6 rounded-2xl border border-[#fca311]/20 relative group backdrop-blur-sm hover:shadow-[0_0_30px_rgba(252,163,17,0.3)] transition-all duration-500"
             >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-15 group-hover:drop-shadow-[0_0_8px_rgba(252,163,17,0.8)] transition-all duration-500">

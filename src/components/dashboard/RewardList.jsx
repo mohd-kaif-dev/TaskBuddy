@@ -49,7 +49,7 @@ const RewardList = ({
     <div className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20">
       <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
         <FaGift className="text-[#fca311]" />
-        Rewards
+        Rewards (Coming Soon)
       </h3>
       <div className="space-y-4">
         {Object.values(GAME_CONFIG.REWARDS)

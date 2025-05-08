@@ -26,6 +26,20 @@
   * {
     @apply m-0 p-0 box-border;
   }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #14213d;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #fca311;
+    border-radius: 30px;
+  }
+
 }
 
 @layer components {

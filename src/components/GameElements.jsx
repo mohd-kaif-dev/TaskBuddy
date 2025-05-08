@@ -203,7 +203,7 @@ export const TaskPointsPreview = ({ points, streakBonus }) => (
               <FaStar className="text-xl opacity-50" />
             </div>
             <p className="text-sm">
-              Complete daily tasks to earn streak bonuses!
+              Complete daily tasks and build your streak to earn streak bonuses!
             </p>
           </div>
         </motion.div>

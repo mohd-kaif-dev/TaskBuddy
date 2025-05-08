@@ -48,6 +48,12 @@ import DashboardSkeleton from "./dashboard/DashboardSkeleton";
 
 // Preset avatar URLs using DiceBear API
 const PRESET_AVATARS = [
+  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Felix",
+  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Aneka",
+  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Sassy",
+  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Jasper",
+  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Luna",
+  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Nova",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Felix",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Aneka",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Sassy",
@@ -57,6 +63,24 @@ const PRESET_AVATARS = [
   "https://api.dicebear.com/7.x/avataaars/png?seed=Zephyr",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Atlas",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Phoenix",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Felix",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Aneka",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Sassy",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Jasper",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Luna",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Nova",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Zephyr",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Atlas",
+  "https://api.dicebear.com/9.x/adventurer/svg?seed=Phoenix",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Felix",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Aneka",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Sassy",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Jasper",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Luna",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Nova",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Zephyr",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Atlas",
+  "https://api.dicebear.com/9.x/bottts/svg?seed=Phoenix",
 ];
 
 const GAME_CONFIG = {
@@ -211,7 +235,6 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [statsExpanded, setStatsExpanded] = useState(false);
-  const [showRewardsModal, setShowRewardsModal] = useState(false);
 
   const { user } = useUser();
 
@@ -269,6 +292,8 @@ const Dashboard = () => {
     lastWeeklyResetDate: new Date().toDateString(), // ✅ Tracks when weekly achievements were last reset
   });
 
+  console.log("gameState initial", gameState);
+
   // Convert file to data URL
   const fileToDataURL = (file) => {
     return new Promise((resolve, reject) => {
@@ -291,6 +316,7 @@ const Dashboard = () => {
 
       try {
         const dataUrl = await fileToDataURL(file);
+
         setUploadedImage(dataUrl);
         setSelectedAvatar(null);
         setUpdateError(null);
@@ -386,96 +412,76 @@ const Dashboard = () => {
   };
 
   const checkResets = () => {
-    console.log("🔁 Checking resets...");
-
+    console.log("Checking resets");
     const today = new Date().toDateString();
-    const now = new Date();
-
     const lastLoginDate = gameState.lastLoginDate;
-    console.log("lastLoginDate", lastLoginDate);
-    console.log("today", today);
 
-    const lastWeeklyReset = new Date(gameState.lastWeeklyResetDate);
-    console.log("gameState", gameState);
-    let updated = { ...gameState };
-    console.log("updated before reset", updated);
-
-    let hasChanged = false;
-
-    // Daily Reset
+    // Only proceed if it's a new day
     if (lastLoginDate !== today) {
-      console.log("✅ Performing daily reset");
+      console.log("Performing Daily Reset");
+      setGameState((prevState) => {
+        // Create a new state object with only the necessary resets
+        const updatedState = {
+          ...prevState,
+          // Reset daily points
+          todayPoints: 0,
+          // Reset early tasks counter
+          earlyTasksToday: 0,
+          // Archive yesterday's achievements
+          dailyAchievementHistory: {
+            ...prevState.dailyAchievementHistory,
+            [lastLoginDate]: prevState.dailyAchievements,
+          },
+          // Reset daily achievements
+          dailyAchievements: {
+            dailyBadges: [],
+          },
+          // Reset only daily badge progress
+          badgeProgress: {
+            ...prevState.badgeProgress,
+            early_bird: 0,
+            night_owl: 0,
+            speed_demon: 0,
+            weekend_warrior: 0,
+            focus_master: 0,
+            task_sprinter: 0,
+            last_minute_hero: 0,
+          },
+          // Update last login date
+          lastLoginDate: today,
+        };
 
-      updated = {
-        ...updated,
-        todayPoints: 0,
-        earlyTasksToday: 0,
-        dailyAchievementHistory: {
-          ...updated.dailyAchievementHistory,
-          [lastLoginDate]: updated.dailyAchievements,
-        },
-        dailyAchievements: {
-          dailyBadges: [],
-        },
-        badgeProgress: {
-          ...updated.badgeProgress,
-          early_bird: 0,
-          night_owl: 0,
-          speed_demon: 0,
-          weekend_warrior: 0,
-          focus_master: 0,
-          task_sprinter: 0,
-          last_minute_hero: 0,
-          // other badgeProgress keys if needed
-        },
-        lastLoginDate: today,
-      };
+        // Update localStorage
+        localStorage.setItem(
+          `userProgress_${user.id}`,
+          JSON.stringify(updatedState)
+        );
 
-      hasChanged = true;
-    }
+        console.log("Updated State after Daily Reset:", updatedState);
 
-    // Weekly Reset (every 7 days)
-    const oneWeek = 7 * 24 * 60 * 60 * 1000;
-    if (now.getTime() - lastWeeklyReset.getTime() >= oneWeek) {
-      console.log("🔁 Performing weekly reset");
-
-      updated = {
-        ...updated,
-        weeklyPoints: 0,
-        lastWeeklyResetDate: today,
-      };
-
-      hasChanged = true;
-    }
-
-    if (hasChanged) {
-      setGameState(updated);
-      localStorage.setItem(`userProgress_${user.id}`, JSON.stringify(updated));
-      console.log("✅ Updated gameState:", updated);
-    } else {
-      console.log("⏸️ No reset needed");
+        return updatedState;
+      });
     }
   };
 
-  useEffect(() => {
-    const simulateYesterdayLogin = () => {
-      setGameState((prev) => {
-        const fakeYesterday = new Date(Date.now() - 86400000).toDateString();
-        const newState = {
-          ...prev,
-          lastLoginDate: fakeYesterday,
-        };
-        console.log("newState", newState);
-        localStorage.setItem(
-          `userProgress_${user.id}`,
-          JSON.stringify(newState)
-        );
-        return newState;
-      });
-    };
+  //   const simulateYesterdayLogin = () => {
+  //     setGameState((prev) => {
+  //       const fakeYesterday = new Date(Date.now() - 86400000).toDateString();
+  //       const newState = {
+  //         ...prev,
+  //         lastLoginDate: fakeYesterday,
+  //       };
+  //       console.log("newState", newState);
+  //       localStorage.setItem(
+  //         `userProgress_${user.id}`,
+  //         JSON.stringify(newState)
+  //       );
+  //       return newState;
+  //     });
+  //   };
 
-    simulateYesterdayLogin(); // Run this once when component mounts
-  }, []);
+  //   simulateYesterdayLogin(); // Run this once when component mounts
+  // }, []);
 
   useEffect(() => {
     const loadData = async () => {
@@ -758,7 +764,7 @@ const Dashboard = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="max-w-7xl mx-auto mt-8 z-10">
+      {/* <div className="max-w-7xl mx-auto mt-8 z-10">
         <div className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
@@ -823,10 +829,10 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Rewards Modal */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {showRewardsModal && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -870,9 +876,7 @@ const Dashboard = () => {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
-
-      {/* Profile Image Modal */}
+      </AnimatePresence> */}
 
       {/* Profile Image Modal */}
       <AnimatePresence>
@@ -887,7 +891,7 @@ const Dashboard = () => {
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
-              className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20 w-full max-w-md"
+              className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20 w-full max-w-md overflow-y-scroll"
             >
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-bold">Change Profile Picture</h3>
@@ -904,10 +908,10 @@ const Dashboard = () => {
                 </button>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-2">
                 {/* Preview */}
                 <div className="flex justify-center">
-                  <div className="w-24 h-24 rounded-full border-2 border-[#fca311] overflow-hidden">
+                  <div className="w-20 h-20 rounded-full border-2 border-[#fca311] overflow-hidden">
                     <img
                       src={uploadedImage || selectedAvatar || user?.imageUrl}
                       alt="Profile Preview"
@@ -948,7 +952,7 @@ const Dashboard = () => {
                   <label className="block text-white/60 text-sm mb-2">
                     Choose an Avatar
                   </label>
-                  <div className="grid grid-cols-5 gap-2">
+                  <div className="grid grid-cols-6 gap-2 overflow-y-scroll max-h-32 p-2">
                     {PRESET_AVATARS.map((avatar, index) => (
                       <button
                         key={index}
