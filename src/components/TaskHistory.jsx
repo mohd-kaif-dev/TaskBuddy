@@ -44,6 +44,13 @@ const TaskHistory = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const filteredTasks = taskHistory.filter((task) => {
     const matchesSearch = task.title
       ?.toLowerCase()
@@ -54,11 +61,11 @@ const TaskHistory = () => {
 
   const getPriorityColor = (priority) => {
     const colors = {
-      low: "text-green-400",
-      medium: "text-yellow-400",
-      high: "text-red-400",
+      LOW: "text-green-400",
+      MEDIUM: "text-yellow-400",
+      HIGH: "text-red-400",
     };
-    return colors[priority] || colors.medium;
+    return colors[priority] || colors.MEDIUM;
   };
 
   const formatDate = (dateString) => {
@@ -110,7 +117,7 @@ const TaskHistory = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#000000] text-white flex flex-col overflow-hidden pt-20 ">
+    <div className="relative min-h-screen bg-[#000000] text-white flex flex-col overflow-hidden pt-20 pb-12">
       <div className="absolute inset-0 bg-gradient-to-br from-[#14213d] to-[#000000] opacity-80">
         <div
           className="absolute inset-0"
@@ -182,9 +189,9 @@ const TaskHistory = () => {
               onClick={() => setIsSelectionMode(!isSelectionMode)}
               className={`${
                 isSelectionMode
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-[#fca311] hover:bg-[#fca311]/80"
-              } text-black font-semibold px-4 py-2 rounded-lg flex items-center gap-1 md:gap-2 transition-colors text-sm md:text-base`}
+                  ? "bg-red-500 hover:bg-red-600 text-sm px-2"
+                  : "bg-[#fca311] hover:bg-[#fca311]/80 px-4"
+              } text-black font-semibold py-2 rounded-lg flex items-center gap-1 md:gap-2 transition-colors text-sm md:text-base`}
             >
               {isSelectionMode ? <FaTimes /> : <FaCheckSquare />}
               {isSelectionMode ? "Cancel Selection" : "Select Tasks"}
@@ -229,17 +236,17 @@ const TaskHistory = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowDeleteConfirm(true)}
-                className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"
               >
                 <FaTrash />
-                Delete Selected
+                <span className="hidden md:block">Delete Selected</span>
               </motion.button>
             )}
           </motion.div>
         )}
 
         {/* Search and Filter */}
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-row gap-4 mb-4">
           <div className="relative flex-1">
             <FaSearch className="absolute left-3 top-3 text-white/60" />
             <input

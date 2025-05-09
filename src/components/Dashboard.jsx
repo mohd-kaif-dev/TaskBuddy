@@ -291,8 +291,6 @@ const Dashboard = () => {
     lastWeeklyResetDate: new Date().toDateString(), // ✅ Tracks when weekly achievements were last reset
   });
 
-  console.log("gameState initial", gameState);
-
   // Convert file to data URL
   const fileToDataURL = (file) => {
     return new Promise((resolve, reject) => {
@@ -523,7 +521,6 @@ const Dashboard = () => {
 
       try {
         setIsLoading(true);
-        console.log("Loading data");
 
         // Load user progress
         const storedProgress = localStorage.getItem(`userProgress_${user.id}`);
@@ -563,6 +560,13 @@ const Dashboard = () => {
     const interval = setInterval(checkResets, 60000); // Check every minute
     return () => clearInterval(interval);
   }, [gameState.lastLoginDate, gameState.lastWeeklyResetDate]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   return isLoading ? (
     <DashboardSkeleton />

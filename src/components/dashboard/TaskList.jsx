@@ -185,7 +185,7 @@ const TaskList = ({
         const isNightTask = now.getHours() >= 20;
         const isEarlyTaskToday =
           isEarlyTask && new Date().toDateString() === gameState.lastLoginDate;
-        console.log("isEarlyTaskToday", isEarlyTaskToday);
+
         const isWeekendTask = [0, 6].includes(now.getDay());
         const isHighPriorityTask = task.priority === "HIGH";
         const hasSharedMilestones = task.milestones?.some((m) => m.shared);

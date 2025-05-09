@@ -12,6 +12,13 @@ import { motion } from "framer-motion";
 const Auth = ({ type }) => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <div className="min-h-screen w-full flex items-stretch pt-16 md:pt-8">
       {/* Left Side - Welcome Message and Art */}

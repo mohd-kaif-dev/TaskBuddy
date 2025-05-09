@@ -21,21 +21,6 @@ const Cursor = () => {
       cursorRing.style.top = `${posY - 15}px`;
     };
 
-    // Update cursor position for touch
-    const moveCursorTouch = (e) => {
-      const touch = e.touches[0];
-      const posX = touch.clientX;
-      const posY = touch.clientY;
-
-      cursorDot.style.left = `${posX}px`;
-      cursorDot.style.top = `${posY}px`;
-      cursorRing.style.left = `${posX - 15}px`;
-      cursorRing.style.top = `${posY - 15}px`;
-
-      // Prevent scrolling while touching
-      e.preventDefault();
-    };
-
     // Add hover effect
     const addHoverClass = () => {
       cursorDot.classList.add("cursor-hover");
@@ -47,7 +32,7 @@ const Cursor = () => {
       cursorRing.classList.remove("cursor-hover");
     };
 
-    // Add click/touch effect
+    // Add click effect
     const addClickClass = () => {
       cursorDot.classList.add("cursor-clicking");
       cursorRing.classList.add("cursor-clicking");
@@ -58,13 +43,13 @@ const Cursor = () => {
       cursorRing.classList.remove("cursor-clicking");
     };
 
-    // Hide cursor when mouse/touch leaves window
+    // Hide cursor when mouse leaves window
     const hideCursor = () => {
       cursorDot.style.opacity = "0";
       cursorRing.style.opacity = "0";
     };
 
-    // Show cursor when mouse/touch enters window
+    // Show cursor when mouse enters window
     const showCursor = () => {
       cursorDot.style.opacity = "1";
       cursorRing.style.opacity = "1";
@@ -77,13 +62,6 @@ const Cursor = () => {
     window.addEventListener("mouseleave", hideCursor);
     window.addEventListener("mouseenter", showCursor);
 
-    // Add event listeners for touch
-    window.addEventListener("touchstart", showCursor);
-    window.addEventListener("touchmove", moveCursorTouch, { passive: false });
-    window.addEventListener("touchend", hideCursor);
-    document.addEventListener("touchstart", addClickClass);
-    document.addEventListener("touchend", removeClickClass);
-
     // Add hover effect to interactive elements
     const interactiveElements = document.querySelectorAll(
       "button, a, input, select, textarea, .interactive, [role='button']"
@@ -91,8 +69,6 @@ const Cursor = () => {
     interactiveElements.forEach((el) => {
       el.addEventListener("mouseover", addHoverClass);
       el.addEventListener("mouseleave", removeHoverClass);
-      el.addEventListener("touchstart", addHoverClass);
-      el.addEventListener("touchend", removeHoverClass);
     });
 
     // Cleanup event listeners
@@ -103,17 +79,9 @@ const Cursor = () => {
       document.removeEventListener("mouseleave", hideCursor);
       document.removeEventListener("mouseenter", showCursor);
 
-      window.removeEventListener("touchstart", showCursor);
-      window.removeEventListener("touchmove", moveCursorTouch);
-      window.removeEventListener("touchend", hideCursor);
-      document.removeEventListener("touchstart", addClickClass);
-      document.removeEventListener("touchend", removeClickClass);
-
       interactiveElements.forEach((el) => {
         el.removeEventListener("mouseover", addHoverClass);
         el.removeEventListener("mouseleave", removeHoverClass);
-        el.removeEventListener("touchstart", addHoverClass);
-        el.removeEventListener("touchend", removeHoverClass);
       });
     };
   }, []);

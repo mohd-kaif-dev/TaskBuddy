@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaBook,
@@ -36,6 +36,13 @@ const Documentation = () => {
   const [activeSection, setActiveSection] = useState("getting-started");
   const [showExample, setShowExample] = useState(null);
   const { isSignedIn } = useUser();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   const sections = [
     {
       id: "getting-started",

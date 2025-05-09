@@ -57,7 +57,7 @@ const Footer = () => {
           {/* Left Section - Date Time */}
           <div className="flex items-center justify-center md:justify-start md:hidden lg:flex">
             <div className="text-white/80 font-mono flex items-center">
-              <FaCalendarAlt className="mr-0 lg:mr-2 text-[#fca311]" />
+              <FaCalendarAlt className="mr-2 text-[#fca311]" />
               {formatDate(currentDateTime)}
             </div>
           </div>
