@@ -25,7 +25,6 @@ const Cursor = () => {
     const addHoverClass = () => {
       cursorDot.classList.add("cursor-hover");
       cursorRing.classList.add("cursor-hover");
-      cursorRingOuter.classList.add("cursor-hover");
     };
 
     const removeHoverClass = () => {
@@ -46,14 +45,14 @@ const Cursor = () => {
 
     // Hide cursor when mouse leaves window
     const hideCursor = () => {
-      cursorDot.style.display = "none";
-      cursorRing.style.display = "none";
+      cursorDot.style.opacity = "0";
+      cursorRing.style.opacity = "0";
     };
 
     // Show cursor when mouse enters window
     const showCursor = () => {
-      cursorDot.style.display = "block";
-      cursorRing.style.display = "block";
+      cursorDot.style.opacity = "1";
+      cursorRing.style.opacity = "1";
     };
 
     // Add event listeners
@@ -166,8 +165,8 @@ const Cursor = () => {
         `}
       </style>
 
-      <div className="cursor-dot" id="cursor-dot"></div>
-      <div className="cursor-ring" id="cursor-ring"></div>
+      <div className="hidden lg:block cursor-dot" id="cursor-dot"></div>
+      <div className="hidden lg:block cursor-ring" id="cursor-ring"></div>
     </>
   );
 };

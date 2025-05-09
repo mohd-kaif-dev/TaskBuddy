@@ -20,6 +20,7 @@ import {
   FaScroll,
 } from "react-icons/fa";
 import { GiLevelThree } from "react-icons/gi";
+import { dark } from "@clerk/themes";
 
 const Navbar = () => {
   const { isSignedIn } = useUser();
@@ -280,7 +281,12 @@ const Navbar = () => {
                   </button>
                 </div>
               ) : (
-                <UserButton afterSignOutUrl="/" />
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    baseTheme: dark,
+                  }}
+                />
               )}
             </div>
 
@@ -309,7 +315,7 @@ const Navbar = () => {
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden border-t border-[#fca311]/20"
             >
-              <div className="px-2 pt-2 pb-3 space-y-1">
+              <div className="px-2 pt-2 pb-3 space-y-1 relative">
                 {resources.map((resource, index) => {
                   // Only show if resource is marked showAlways or if user is signed in and resource is signedInOnly
                   if (
@@ -357,8 +363,18 @@ const Navbar = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="flex items-center px-4 py-2">
-                    <UserButton afterSignOutUrl="/" />
+                  <div className="absolute right-4 top-2 z-20 items-center border border-[#fca311]/20 rounded-full">
+                    <UserButton
+                      afterSignOutUrl="/"
+                      appearance={{
+                        baseTheme: dark,
+                        elements: {
+                          avatarBox: "w-8 h-8", // Increase avatar size
+                          userButtonBox: "p-2", // Add padding around button
+                          userButtonTrigger: "scale-110", // Scale up the entire button
+                        },
+                      }}
+                    />
                   </div>
                 )}
               </div>

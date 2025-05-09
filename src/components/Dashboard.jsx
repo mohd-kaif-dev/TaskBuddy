@@ -253,7 +253,7 @@ const Dashboard = () => {
     earlyTasks: 0,
     perfectTasks: 0,
     earlyTasksToday: 0,
-    lastLoginDate: new Date().toDateString(), // ✅ Tracks when daily achievements were last reset
+    lastLoginDate: new Date(Date.now() - 86400000).toDateString(), // ✅ Tracks when daily achievements were last reset
 
     // Points tracking
     todayPoints: 0,
@@ -464,6 +464,50 @@ const Dashboard = () => {
     }
   };
 
+  const checkStreak = () => {
+    const today = new Date().toDateString();
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    const lastLoginDate = gameState.lastLoginDate;
+
+    // ✅ If the user logged in yesterday, increment the streak
+    if (lastLoginDate === yesterday) {
+      console.log("🔥 Consecutive login - incrementing streak");
+      setGameState((prev) => {
+        const newStreak = prev.streak + 1;
+        const newLongestStreak = Math.max(newStreak, prev.longestStreak);
+        const newState = {
+          ...prev,
+          streak: newStreak,
+          longestStreak: newLongestStreak,
+          lastLoginDate: today,
+        };
+        localStorage.setItem(
+          `userProgress_${user.id}`,
+          JSON.stringify(newState)
+        );
+        return newState; // ✅ Critical to update actual state
+      });
+    }
+    // ❌ If last login wasn't yesterday or today, reset streak
+    else if (lastLoginDate !== today) {
+      console.log("💔 Missed login - resetting streak");
+      setGameState((prev) => {
+        const newState = {
+          ...prev,
+          streak: 0,
+          lastLoginDate: today,
+        };
+        localStorage.setItem(
+          `userProgress_${user.id}`,
+          JSON.stringify(newState)
+        );
+        return newState; // ✅ Critical to update actual state
+      });
+    } else {
+      console.log("✅ Already logged in today - no change to streak");
+    }
+  };
+
   //   const simulateYesterdayLogin = () => {
   //     setGameState((prev) => {
   //       const fakeYesterday = new Date(Date.now() - 86400000).toDateString();
@@ -524,58 +568,10 @@ const Dashboard = () => {
   // Check for daily and weekly resets
   useEffect(() => {
     checkResets();
+    checkStreak();
     const interval = setInterval(checkResets, 60000); // Check every minute
     return () => clearInterval(interval);
   }, [gameState.lastLoginDate, gameState.lastWeeklyResetDate]);
-
-  // Streak tracking
-  useEffect(() => {
-    const checkStreak = () => {
-      const today = new Date().toDateString();
-      const yesterday = new Date(Date.now() - 86400000).toDateString();
-      const lastLoginDate = gameState.lastLoginDate;
-
-      // ✅ If the user logged in yesterday, increment the streak
-      if (lastLoginDate === yesterday) {
-        console.log("🔥 Consecutive login - incrementing streak");
-        setGameState((prev) => {
-          const newStreak = prev.streak + 1;
-          const newLongestStreak = Math.max(newStreak, prev.longestStreak);
-          const newState = {
-            ...prev,
-            streak: newStreak,
-            longestStreak: newLongestStreak,
-            lastLoginDate: today,
-          };
-          localStorage.setItem(
-            `userProgress_${user.id}`,
-            JSON.stringify(newState)
-          );
-          return newState; // ✅ Critical to update actual state
-        });
-      }
-      // ❌ If last login wasn't yesterday or today, reset streak
-      else if (lastLoginDate !== today) {
-        console.log("💔 Missed login - resetting streak");
-        setGameState((prev) => {
-          const newState = {
-            ...prev,
-            streak: 0,
-            lastLoginDate: today,
-          };
-          localStorage.setItem(
-            `userProgress_${user.id}`,
-            JSON.stringify(newState)
-          );
-          return newState; // ✅ Critical to update actual state
-        });
-      } else {
-        console.log("✅ Already logged in today - no change to streak");
-      }
-    };
-
-    checkStreak();
-  }, [gameState.lastLoginDate]);
 
   return isLoading ? (
     <DashboardSkeleton />
@@ -630,6 +626,9 @@ const Dashboard = () => {
 
       {/* Your existing content */}
       <div className="relative z-10">
+        <button className="primary-btn z-50" onClick={() => checkStreak()}>
+          Check Streak
+        </button>
         <Header
           gameState={gameState}
           user={user}

@@ -20,7 +20,9 @@ function App() {
     <ClerkProvider publishableKey={clerkPubKey}>
       <Router>
         <div className="min-h-screen bg-[#000000] text-white">
-          <Cursor />
+          <div className="hidden lg:block">
+            <Cursor />
+          </div>
           <Navbar />
           <Routes>
             {/* Public home page - redirect to dashboard if signed in */}

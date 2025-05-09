@@ -10,6 +10,7 @@ import {
   FaGamepad,
 } from "react-icons/fa";
 import { useEffect } from "react";
+import Testimonials from "./Testimonials";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -457,6 +458,8 @@ const Home = () => {
           </motion.div>
         </div>
       </div>
+      {/* Testimonials Section */}
+      <Testimonials />
     </div>
   );
 };

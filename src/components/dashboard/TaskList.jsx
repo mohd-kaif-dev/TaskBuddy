@@ -571,6 +571,7 @@ const TaskList = ({
             <div
               className="relative cursor-pointer"
               onClick={() => setShowAddTask(true)}
+              type="button"
             >
               <div className="absolute -top-3 -right-3 animate-ping">
                 <div className="w-3 h-3 bg-[#fca311] rounded-full opacity-75"></div>
