@@ -8,6 +8,7 @@ import {
   FaLevelUpAlt,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const Auth = ({ type }) => {
   const navigate = useNavigate();
