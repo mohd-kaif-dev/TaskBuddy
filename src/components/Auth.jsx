@@ -58,7 +58,7 @@ const Auth = ({ type }) => {
                 <FaTrophy className="text-[#fca311] text-8xl group-hover:rotate-12 group-hover:scale-110 transition-all duration-500" />
               </div>
               <div className="relative z-10">
-                <h3 className="text-white font-bold text-lg mb-1 group-hover:text-[#fca311] transition-colors">
+                <h3 className="font-bold text-lg mb-1 text-[#fca311] transition-colors">
                   Earn Rewards
                 </h3>
                 <p className="text-white/70 text-sm leading-relaxed">
@@ -77,7 +77,7 @@ const Auth = ({ type }) => {
                 <FaStar className="text-[#fca311] text-8xl group-hover:rotate-45 group-hover:scale-110 transition-all duration-500" />
               </div>
               <div className="relative z-10">
-                <h3 className="text-white font-bold text-lg mb-1 group-hover:text-[#fca311] transition-colors">
+                <h3 className="font-bold text-lg mb-1 text-[#fca311] transition-colors">
                   Level Up
                 </h3>
                 <p className="text-white/70 text-sm leading-relaxed">
@@ -96,7 +96,7 @@ const Auth = ({ type }) => {
                 <FaLevelUpAlt className="text-[#fca311] text-8xl group-hover:translate-y-[-10px] group-hover:scale-110 transition-all duration-500" />
               </div>
               <div className="relative z-10">
-                <h3 className="text-white font-bold text-lg mb-1 group-hover:text-[#fca311] transition-colors">
+                <h3 className="font-bold text-lg mb-1 text-[#fca311] transition-colors">
                   Track Progress
                 </h3>
                 <p className="text-white/70 text-sm leading-relaxed">
@@ -115,7 +115,7 @@ const Auth = ({ type }) => {
                 <FaGamepad className="text-[#fca311] text-8xl group-hover:rotate-[-20deg] group-hover:scale-110 transition-all duration-500" />
               </div>
               <div className="relative z-10">
-                <h3 className="text-white font-bold text-lg mb-1 group-hover:text-[#fca311] transition-colors">
+                <h3 className="font-bold text-lg mb-1 text-[#fca311] transition-colors">
                   Have Fun
                 </h3>
                 <p className="text-white/70 text-sm leading-relaxed">
@@ -147,7 +147,7 @@ const Auth = ({ type }) => {
       </div>
 
       {/* Right Side - Auth Component */}
-      <div className="w-full lg:w-1/2 flex justify-center p-4 relative">
+      <div className="w-full lg:w-1/2 flex items-center lg:justify-center md:mt-16 lg:mt-0 p-4 relative md:flex-col lg:flex-row">
         {/* Mobile Back Button */}
         <motion.button
           initial={{ opacity: 0, y: 10 }}
@@ -160,8 +160,50 @@ const Auth = ({ type }) => {
           <span>Home</span>
         </motion.button>
 
-        <div className="w-full max-w-md mt-16 md:mt-8 ml-0 md:ml-16">
-          {type === "sign-in" && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8 hidden md:block lg:hidden"
+        >
+          {type === "sign-up" ? (
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#fca311] to-orange-500 bg-clip-text text-transparent">
+                Welcome New Adventurer!
+              </h2>
+              <p className="text-white/80">
+                Ready to begin your productivity quest?
+                <span className="block mt-1 text-sm">
+                  <span className="text-[#fca311]">⚔️ Level up</span> your
+                  tasks,
+                  <span className="text-[#fca311]"> 🏆 earn rewards</span>, and
+                  <span className="text-[#fca311]">
+                    {" "}
+                    🌟 unlock achievements
+                  </span>
+                </span>
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#fca311] to-orange-500 bg-clip-text text-transparent">
+                Welcome Back Hero!
+              </h2>
+              <p className="text-white/80">
+                Your productivity journey continues...
+                <span className="block mt-1 text-sm">
+                  <span className="text-[#fca311]">🎯 Daily quests</span> await,
+                  <span className="text-[#fca311]"> ⚡ power up</span> your
+                  streak, and
+                  <span className="text-[#fca311]"> 👑 claim glory</span>
+                </span>
+              </p>
+            </div>
+          )}
+        </motion.div>
+
+        <div className="w-full max-w-md mt-12 flex items-center justify-center">
+          {type === "sign-in" ? (
             <SignIn
               routing="path"
               path="/sign-in"
@@ -184,10 +226,7 @@ const Auth = ({ type }) => {
                 },
               }}
             />
-          )}
-        </div>
-        <div className="w-full max-w-md mt-16 md:mt-8 mr-0 md:mr-16">
-          {type === "sign-up" && (
+          ) : (
             <SignUp
               routing="path"
               path="/sign-up"

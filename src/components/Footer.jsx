@@ -53,11 +53,11 @@ const Footer = () => {
     >
       <div className="max-w-7xl mx-auto text-sm">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-8 ">
           {/* Left Section - Date Time */}
-          <div className="flex items-center justify-center md:justify-start">
+          <div className="flex items-center justify-center md:justify-start md:hidden lg:flex">
             <div className="text-white/80 font-mono flex items-center">
-              <FaCalendarAlt className="mr-2 text-[#fca311]" />
+              <FaCalendarAlt className="mr-0 lg:mr-2 text-[#fca311]" />
               {formatDate(currentDateTime)}
             </div>
           </div>

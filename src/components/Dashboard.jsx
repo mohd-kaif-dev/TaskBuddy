@@ -31,7 +31,6 @@ import {
   FaChevronDown,
 } from "react-icons/fa";
 
-import confetti from "canvas-confetti";
 import {
   LevelProgress,
   StreakDisplay,
@@ -253,7 +252,7 @@ const Dashboard = () => {
     earlyTasks: 0,
     perfectTasks: 0,
     earlyTasksToday: 0,
-    lastLoginDate: new Date(Date.now() - 86400000).toDateString(), // ✅ Tracks when daily achievements were last reset
+    lastLoginDate: new Date().toDateString(), // ✅ Tracks when daily achievements were last reset
 
     // Points tracking
     todayPoints: 0,
@@ -468,6 +467,9 @@ const Dashboard = () => {
     const today = new Date().toDateString();
     const yesterday = new Date(Date.now() - 86400000).toDateString();
     const lastLoginDate = gameState.lastLoginDate;
+    console.log("lastLoginDate", lastLoginDate);
+    console.log("yesterday", yesterday);
+    console.log("today", today);
 
     // ✅ If the user logged in yesterday, increment the streak
     if (lastLoginDate === yesterday) {
@@ -475,33 +477,21 @@ const Dashboard = () => {
       setGameState((prev) => {
         const newStreak = prev.streak + 1;
         const newLongestStreak = Math.max(newStreak, prev.longestStreak);
-        const newState = {
+        return {
           ...prev,
           streak: newStreak,
           longestStreak: newLongestStreak,
-          lastLoginDate: today,
         };
-        localStorage.setItem(
-          `userProgress_${user.id}`,
-          JSON.stringify(newState)
-        );
-        return newState; // ✅ Critical to update actual state
       });
     }
     // ❌ If last login wasn't yesterday or today, reset streak
     else if (lastLoginDate !== today) {
       console.log("💔 Missed login - resetting streak");
       setGameState((prev) => {
-        const newState = {
+        return {
           ...prev,
           streak: 0,
-          lastLoginDate: today,
         };
-        localStorage.setItem(
-          `userProgress_${user.id}`,
-          JSON.stringify(newState)
-        );
-        return newState; // ✅ Critical to update actual state
       });
     } else {
       console.log("✅ Already logged in today - no change to streak");
@@ -533,6 +523,7 @@ const Dashboard = () => {
 
       try {
         setIsLoading(true);
+        console.log("Loading data");
 
         // Load user progress
         const storedProgress = localStorage.getItem(`userProgress_${user.id}`);
@@ -567,8 +558,8 @@ const Dashboard = () => {
 
   // Check for daily and weekly resets
   useEffect(() => {
-    checkResets();
     checkStreak();
+    checkResets();
     const interval = setInterval(checkResets, 60000); // Check every minute
     return () => clearInterval(interval);
   }, [gameState.lastLoginDate, gameState.lastWeeklyResetDate]);
@@ -626,9 +617,6 @@ const Dashboard = () => {
 
       {/* Your existing content */}
       <div className="relative z-10">
-        <button className="primary-btn z-50" onClick={() => checkStreak()}>
-          Check Streak
-        </button>
         <Header
           gameState={gameState}
           user={user}
