@@ -14,11 +14,7 @@ import {
   FaBolt,
   FaFlag,
   FaPlus,
-  FaChevronRight,
-  FaGift,
-  FaRegClock,
   FaRegCalendarAlt,
-  FaTrash,
   FaTimes,
   FaCheck,
   FaUpload,
@@ -47,12 +43,12 @@ import DashboardSkeleton from "./dashboard/DashboardSkeleton";
 
 // Preset avatar URLs using DiceBear API
 const PRESET_AVATARS = [
-  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Felix",
-  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Aneka",
-  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Sassy",
-  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Jasper",
-  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Luna",
-  "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Nova",
+  "https://api.dicebear.com/7.x/adventurer-neutral/png?seed=Felix",
+  "https://api.dicebear.com/7.x/adventurer-neutral/png?seed=Aneka",
+  "https://api.dicebear.com/7.x/adventurer-neutral/png?seed=Sassy",
+  "https://api.dicebear.com/7.x/adventurer-neutral/png?seed=Jasper",
+  "https://api.dicebear.com/7.x/adventurer-neutral/png?seed=Luna",
+  "https://api.dicebear.com/7.x/adventurer-neutral/png?seed=Nova",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Felix",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Aneka",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Sassy",
@@ -62,24 +58,24 @@ const PRESET_AVATARS = [
   "https://api.dicebear.com/7.x/avataaars/png?seed=Zephyr",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Atlas",
   "https://api.dicebear.com/7.x/avataaars/png?seed=Phoenix",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Felix",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Aneka",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Sassy",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Jasper",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Luna",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Nova",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Zephyr",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Atlas",
-  "https://api.dicebear.com/9.x/adventurer/svg?seed=Phoenix",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Felix",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Aneka",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Sassy",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Jasper",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Luna",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Nova",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Zephyr",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Atlas",
-  "https://api.dicebear.com/9.x/bottts/svg?seed=Phoenix",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Felix",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Aneka",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Sassy",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Jasper",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Luna",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Nova",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Zephyr",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Atlas",
+  "https://api.dicebear.com/7.x/adventurer/png?seed=Phoenix",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Felix",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Aneka",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Sassy",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Jasper",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Luna",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Nova",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Zephyr",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Atlas",
+  "https://api.dicebear.com/7.x/bottts/png?seed=Phoenix",
 ];
 
 const GAME_CONFIG = {
@@ -754,75 +750,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Bottom Section */}
-      {/* <div className="max-w-7xl mx-auto mt-8 z-10">
-        <div className="bg-[#14213d] rounded-xl p-6 shadow-lg border border-[#fca311]/20">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <FaGift className="text-[#fca311] text-2xl" />
-              <div>
-                <h3 className="text-lg font-bold">Ready to Claim Rewards?</h3>
-                <p className="text-white/60">
-                  You have {gameState.unlockedRewards?.length || 0} rewards
-                  available to claim!
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => {
-                  // Only allow claiming if there are rewards
-                  if (!gameState.unlockedRewards?.length) return;
-
-                  // Trigger confetti
-                  confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                  });
-
-                  // Mark rewards as claimed
-                  const updatedGameState = {
-                    ...gameState,
-                    claimedRewards: [
-                      ...(gameState.claimedRewards || []),
-                      ...gameState.unlockedRewards,
-                    ],
-                    unlockedRewards: [],
-                  };
-
-                  // Update state and localStorage
-                  setGameState(updatedGameState);
-                  localStorage.setItem(
-                    `userProgress_${user.id}`,
-                    JSON.stringify(updatedGameState)
-                  );
-
-                  // Show success mascot
-                  setShowMascot(true);
-                }}
-                disabled={!gameState.unlockedRewards?.length}
-                className={`btn-primary flex items-center gap-2 group ${
-                  !gameState.unlockedRewards?.length
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
-                }`}
-              >
-                <span>Claim Rewards</span>
-                <FaChevronRight className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button
-                onClick={() => setShowRewardsModal(true)}
-                className="text-white/60 hover:text-white transition-colors"
-              >
-                View All
-              </button>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Rewards Modal */}
+      {/* Rewards Modal (Coming Soon) */}
       {/* <AnimatePresence>
         {showRewardsModal && (
           <motion.div

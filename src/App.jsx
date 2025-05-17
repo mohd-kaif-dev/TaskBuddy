@@ -13,6 +13,7 @@ import TaskHistory from "./components/TaskHistory";
 import Documentation from "./components/Documentation";
 import Footer from "./components/Footer";
 import Cursor from "./components/Cursor";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { isLoaded } = useAuth();
@@ -115,6 +116,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
+      <Toaster />
     </Router>
   );
 }

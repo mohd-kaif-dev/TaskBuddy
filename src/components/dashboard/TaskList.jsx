@@ -13,6 +13,8 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Link } from "react-router-dom";
+import TaskDemo from "../../asset/TaskDemo.webp";
+import { FaCircleInfo } from "react-icons/fa6";
 
 const TaskList = ({
   tasks,
@@ -29,6 +31,7 @@ const TaskList = ({
   const [editingTask, setEditingTask] = useState(null);
   const [showTaskFailureMascot, setShowTaskFailureMascot] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showTaskDemo, setShowTaskDemo] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
   // Load completed tasks from localStorage on mount
   const [completedTasks, setCompletedTasks] = useState(() => {
@@ -567,47 +570,76 @@ const TaskList = ({
           animate={{ opacity: 1, y: 0 }}
           className="bg-gradient-to-br from-[#14213d] to-[#1a2b4d] rounded-xl p-4 text-center border border-[#fca311]/20 shadow-xl"
         >
-          <div className="flex flex-col items-center gap-8">
-            <div
-              className="relative cursor-pointer"
-              onClick={() => setShowAddTask(true)}
-              type="button"
+          <div className="flex flex-col items-center gap-8 relative">
+            <button
+              onClick={() => setShowTaskDemo(!showTaskDemo)}
+              className="absolute top-2 right-2"
+              title="Demo Task"
             >
-              <div className="absolute -top-3 -right-3 animate-ping">
-                <div className="w-3 h-3 bg-[#fca311] rounded-full opacity-75"></div>
-              </div>
-              <div className="w-16 h-16 bg-[#fca311]/10 rounded-full flex items-center justify-center">
-                <FaPlus className="text-[#fca311] text-3xl animate-pulse" />
-              </div>
-            </div>
+              <FaCircleInfo className="w-5 h-5 hover:text-[#fca311]" />
+            </button>
+            {showTaskDemo && (
+              <motion.div
+                initial={{ y: -50, scale: 0 }}
+                animate={{ y: 0, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mt-2"
+              >
+                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent mb-4">
+                  Task Demo
+                </h1>
+                <img
+                  src={TaskDemo}
+                  alt="Task Demo"
+                  className="w-full h-full rounded-xl"
+                />
+              </motion.div>
+            )}
 
-            <div className="space-y-3">
-              <h3 className="text-2xl md:text-xl font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent">
-                Start Your Productivity Journey!
-              </h3>
-              <p className="text-white/60 max-w-md mx-auto">
-                Create your tasks and begin earning points, unlocking
-                achievements, and reaching new milestones on your path to
-                success.
-              </p>
-            </div>
+            {!showTaskDemo && (
+              <>
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => setShowAddTask(true)}
+                  type="button"
+                >
+                  <div className="absolute -top-3 -right-3 animate-ping">
+                    <div className="w-3 h-3 bg-[#fca311] rounded-full opacity-75"></div>
+                  </div>
+                  <div className="w-16 h-16 bg-[#fca311]/10 rounded-full flex items-center justify-center">
+                    <FaPlus className="text-[#fca311] text-3xl animate-pulse" />
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-4 text-xs tracking-tighter md:text-sm text-white/40">
-              <div className="flex items-center gap-2">
-                <FaCheckCircle className="text-green-500" />
-                <span>Track Progress</span>
-              </div>
-              <div className="w-1 h-6 md:h-1 bg-white/20 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <FaRegClock className="text-red-600" />
-                <span>Set Deadlines</span>
-              </div>
-              <div className="w-1 h-6 md:h-1 bg-white/20 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <FaStar className="text-yellow-500" />
-                <span>Earn Rewards</span>
-              </div>
-            </div>
+                <div className="space-y-3">
+                  <h3 className="text-2xl md:text-xl font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent">
+                    Start Your Productivity Journey!
+                  </h3>
+                  <p className="text-white/60 max-w-md mx-auto">
+                    Create your tasks and begin earning points, unlocking
+                    achievements, and reaching new milestones on your path to
+                    success.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 text-xs tracking-tighter md:text-sm text-white/40">
+                  <div className="flex items-center gap-2">
+                    <FaCheckCircle className="text-green-500" />
+                    <span>Track Progress</span>
+                  </div>
+                  <div className="w-1 h-6 md:h-1 bg-white/20 rounded-full"></div>
+                  <div className="flex items-center gap-2">
+                    <FaRegClock className="text-red-600" />
+                    <span>Set Deadlines</span>
+                  </div>
+                  <div className="w-1 h-6 md:h-1 bg-white/20 rounded-full"></div>
+                  <div className="flex items-center gap-2">
+                    <FaStar className="text-yellow-500" />
+                    <span>Earn Rewards</span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </motion.div>
       ) : (

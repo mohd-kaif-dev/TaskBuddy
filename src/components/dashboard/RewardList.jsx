@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaGift, FaCheck } from "react-icons/fa";
+import { FaGift } from "react-icons/fa";
 import { RewardCard } from "../GameElements";
 import confetti from "canvas-confetti";
 

@@ -14,8 +14,6 @@ import {
   FaGem,
   FaMedal,
   FaCrown,
-  FaChevronRight,
-  FaChevronDown,
   FaPlus,
   FaCheck,
   FaClock,
@@ -24,8 +22,6 @@ import {
   FaBell,
   FaChartLine,
   FaPalette,
-  FaLock,
-  FaUnlock,
 } from "react-icons/fa";
 import { GiLevelThree } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";

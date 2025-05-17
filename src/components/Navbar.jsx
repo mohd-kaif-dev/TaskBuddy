@@ -8,7 +8,6 @@ import {
   FaBook,
   FaGem,
   FaMedal,
-  FaFire,
   FaCrown,
   FaBolt,
   FaGamepad,
@@ -16,7 +15,6 @@ import {
   FaTimes,
   FaBars,
   FaCalendarCheck,
-  FaHistory,
   FaScroll,
 } from "react-icons/fa";
 import { GiLevelThree } from "react-icons/gi";

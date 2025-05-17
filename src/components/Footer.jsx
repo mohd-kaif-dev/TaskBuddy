@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  FaHeart,
-  FaGamepad,
-  FaTrophy,
-  FaStar,
-  FaCrown,
-  FaShieldAlt,
-  FaCalendarAlt,
-} from "react-icons/fa";
+import { FaHeart, FaShieldAlt, FaCalendarAlt } from "react-icons/fa";
 
 const Footer = () => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());

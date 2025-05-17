@@ -6,12 +6,29 @@ import {
   FaTrophy,
   FaStar,
   FaLevelUpAlt,
+  FaTimes,
+  FaRegClipboard,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Auth = ({ type }) => {
   const navigate = useNavigate();
+  const [showJudgeModal, setShowJudgeModal] = useState(true);
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log("Text copied to clipboard");
+        toast.success("Text copied to Clipboard");
+      })
+      .catch((error) => {
+        console.error("Error copying text to clipboard: ", error);
+        toast.error("Error copying text to Clipboard");
+      });
+  };
 
   useEffect(() => {
     window.scrollTo({
@@ -260,6 +277,79 @@ const Auth = ({ type }) => {
           )}
         </div>
       </div>
+
+      <AnimatePresence>
+        {showJudgeModal && (
+          <div className="absolute inset-0 bg-black/80">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="fixed top-1/3 left-1/5 md:left-1/4 bg-gradient-to-r from-[#132242] to-[#062c77] p-6 rounded-2xl shadow-xl border border-[#fca311]/30 max-w-lg backdrop-blur-sm z-50"
+            >
+              <button
+                onClick={() => setShowJudgeModal(false)}
+                className="absolute -top-3 -right-3 w-8 h-8 bg-[#14213d] rounded-full flex items-center justify-center border border-[#fca311]/30 shadow-lg hover:bg-[#1a2b4d] hover:border-[#fca311] transition-all duration-300 group"
+              >
+                <FaTimes className="text-[#fca311] group-hover:rotate-90 transition-transform duration-300" />
+              </button>
+
+              <div className="flex items-center gap-6">
+                <div className="flex-1">
+                  <motion.h4
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-xl font-bold bg-gradient-to-r from-[#fca311] to-[#ffd700] bg-clip-text text-transparent"
+                  >
+                    A message for Judges 👨‍⚖️
+                  </motion.h4>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-white/80 mt-1 text-sm md:text-base"
+                  >
+                    Welcome, esteemed judges! Thank you for reviewing my
+                    project. Please use the credentials provided to access the
+                    TaskBuddy Dashboard.
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-white/80 mt-4 text-sm md:text-base group"
+                  >
+                    <strong>Email : </strong>{" "}
+                    <span
+                      onClick={() => copyToClipboard("steve@rogers.com")}
+                      className="text-[#fca311] cursor-pointer font-bold"
+                    >
+                      steve@rogers.com{" "}
+                      <FaRegClipboard className="w-4 h-4 opacity-0 text-white inline group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-white/80 text-sm md:text-base group"
+                  >
+                    <strong>Password : </strong>{" "}
+                    <span
+                      onClick={() => copyToClipboard("Human@5243")}
+                      className="text-[#fca311] cursor-pointer font-bold"
+                    >
+                      Human@5243{" "}
+                      <FaRegClipboard className="w-4 h-4 opacity-0 text-white inline group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                    </span>
+                  </motion.p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

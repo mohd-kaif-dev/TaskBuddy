@@ -1,12 +1,26 @@
-# TaskBuddy - Your Friendly Task Management Companion
+# TaskBuddy - Task Management For Lazy Genius
 
-TaskBuddy is a modern, interactive task management application designed for people who struggle with task management. It provides a fun and engaging way to stay on track with your tasks through motivational quotes and smooth animations.
+TaskBuddy is a modern, interactive task management application designed for people who struggle with task management. It provides a fun and engaging way to stay on track with your tasks through gamified badges, achievements and smooth animations.
+
+# Live Demo
+
+[Live Link](https://task-buddy-mk.vercel.app)
+
+# Screenshots
+
+![LandingPage](public/screenshots/LandingPage.png)
+![Dashboard](public/screenshots/Dashboard.png)
+![Dashboard1](public/screenshots/Dashboard1.png)
+![TaskHistory](public/screenshots/TaskHistory.png)
+![AddTaskModal](public/screenshots/AddTaskModal.png)
+![TaskDemo](public/screenshots/TaskDemo.png)
+![Badges](public/screenshots/Badges.png)
+![Documentation](public/screenshots/Documentation.png)
 
 ## Features
 
 - 🎯 Simple and intuitive task management
-- 💪 Motivational quotes that change every 30 seconds
-- 🎨 Beautiful and modern UI with smooth animations
+- 🎨 Clean and modern UI with smooth animations
 - 🔒 Secure authentication with Clerk
 - 💾 Local storage for persistent task data
 - 🌙 Dark mode support
@@ -35,8 +49,8 @@ TaskBuddy is a modern, interactive task management application designed for peop
 - Clerk (Authentication)
 - GSAP (Animations)
 - Framer Motion
-- Emotion (Styled Components)
 - React Icons
+- Tailwind CSS
 
 ## Contributing
 
@@ -44,4 +58,4 @@ Feel free to submit issues and enhancement requests!
 
 ## License
 
-This project is licensed under the MIT License.
+This project is an open-source project created by Mohd.Kaif.
