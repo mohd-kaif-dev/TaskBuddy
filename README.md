@@ -8,14 +8,22 @@ TaskBuddy is a modern, interactive task management application designed for peop
 
 # Screenshots
 
-![LandingPage](public/screenshots/LandingPage.png)
-![Dashboard](public/screenshots/Dashboard.png)
-![Dashboard1](public/screenshots/Dashboard1.png)
-![TaskHistory](public/screenshots/TaskHistory.png)
-![AddTaskModal](public/screenshots/AddTaskModal.png)
-![TaskDemo](public/screenshots/TaskDemo.png)
-![Badges](public/screenshots/Badges.png)
-![Documentation](public/screenshots/Documentation.png)
+| Landing Page | Dashboard |
+|-------------|-------------|
+| ![LandingPage](public/screenshots/LandingPage.png) | ![Dashboard](public/screenshots/Dashboard.png) |
+
+| Dashboard 1 | Task History |
+|-------------|-------------|
+| ![Dashboard1](public/screenshots/Dashboard1.png) | ![TaskHistory](public/screenshots/TaskHistory.png) |
+
+| Add Task Modal | Task Demo |
+|-------------|-------------|
+| ![AddTaskModal](public/screenshots/AddTaskModal.png) | ![TaskDemo](public/screenshots/TaskDemo.png) |
+
+| Badges | Documentation |
+|-------------|-------------|
+| ![Badges](public/screenshots/Badges.png) | ![Documentation](public/screenshots/Documentation.png) |
+
 
 ## Features
 
